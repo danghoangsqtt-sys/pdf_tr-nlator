@@ -39,4 +39,4 @@ Kỳ vọng: mọi requirement và task có ID; không có whitespace error.
 ## Implementation Notes
 
 - 2026-08-28: task contract và P0 state được tạo trước khi cập nhật đặc tả/plan.
-- 2026-08-28: SPEC/PLAN đã bổ sung module boundaries, data contracts, state machine, error taxonomy, privacy, gates, traceability, WBS, milestones, Definition of Done và rollback controls. `git diff --check` pass.
+- 2026-08-28: SPEC/PLAN đã bổ sung module boundaries, data contracts, state machine, error taxonomy, privacy, gates, traceability, WBS, milestones, Definition of Done và rollback controls. `git diff --check` pass. Git persistence hoàn tất trên `origin/main`; task PASS.
