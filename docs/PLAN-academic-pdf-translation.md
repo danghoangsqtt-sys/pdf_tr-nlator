@@ -1,7 +1,7 @@
-# PLAN — Thực thi dịch PDF học thuật có kiểm soát
+# DEVELOPMENT PLAN — Thực thi dịch PDF học thuật có kiểm soát
 
 **Liên kết đặc tả:** [SPEC-academic-pdf-translation.md](SPEC-academic-pdf-translation.md)  
-**Trạng thái:** Ready for implementation sau khi có fixtures hợp lệ
+**Trạng thái:** Baseline execution plan; P0 in progress
 
 ## Thứ tự triển khai
 
@@ -13,6 +13,35 @@
 | P3 | Verifier + quality report | P1, P2 | quyết định done/partial có chứng cứ |
 | P4 | CLI/GUI UX | P2, P3 | người dùng chọn đúng mode, không hiểu nhầm |
 | P5 | Regression, hiệu năng, tài liệu phát hành | P1–P4 | release candidate |
+
+## Nguyên tắc điều hành
+
+1. **Dependency trước tốc độ:** không triển khai T-103 trở đi trước khi P0 có fixture/expected baseline; T-102 là emergency hardening đã hoàn tất và không thay đổi quy tắc này.
+2. **Một task, một contract:** mỗi task phải có `Paths`, file-level plan, verification, rollback/fallback và Definition of Done trong `.DHSYSTEM/phases/.../tasks/` trước khi sửa shipping code.
+3. **Fail closed:** unsure region/term/formula dẫn đến preserve + `partial`, không dẫn đến tự dịch.
+4. **Durable evidence:** task PASS yêu cầu test pass, working tree sạch, commit đã push `origin/main`, tag checkpoint đã push.
+
+## Dependency graph và milestones
+
+```text
+M0 T-000 system baseline
+ ├─ M1 T-001 fixture ─ T-002 terminology baseline
+ │                    └─ T-101 regions ─ T-103 formula ─ T-104 protection QA
+ └─ T-003 delivery ADR ─ T-201 glossary ─ T-202 Handoff v2 ─ T-203 CLI
+                                              └─ T-301 verifier ─ T-302 report ─ T-303 render QA
+                                                                            └─ M5 T-401/T-402 UX
+                                                                                 └─ M6 T-501/T-502/T-503 release
+```
+
+| Milestone | Exit criterion | Cannot proceed without |
+|---|---|---|
+| M0 — System baseline | T-000 PASS; spec/plan traceable | clean Git checkpoint |
+| M1 — Corpus baseline | T-001/T-002 PASS | permitted fixture + reviewer expected results |
+| M2 — Preservation safety | T-101/T-103/T-104 PASS | structural + visual protection proof |
+| M3 — Academic pipeline | T-003/T-201…T-203 PASS | approved delivery policy |
+| M4 — Decisionable quality | T-301…T-303 PASS | stable quality report and injected-failure test |
+| M5 — User-facing mode | T-401/T-402 PASS | no misleading quality/privacy UX |
+| M6 — Release candidate | T-501…T-503 PASS | full matrix + docs/release hygiene |
 
 ## P0 — Corpus, baseline và quyết định sản phẩm
 
@@ -153,7 +182,49 @@
 3. Không phát hành nếu AC-01 đến AC-06 chưa pass.
 4. Bất kỳ region không chắc chắn nào phải giữ nguyên và xuất hiện trong quality report; không được tự dịch để “tăng coverage”.
 
+## Definition of Done theo loại task
+
+| Loại task | Bằng chứng bắt buộc |
+|---|---|
+| Core PDF | Unit test cho signal positive/negative; fixture e2e khi có PDF; không làm source PDF thay đổi. |
+| Glossary/translator | JSON schema test, placeholder compatibility v1/v2, case/boundary/conflict test. |
+| Verifier/report | Test cho `pass`, `warning`, `error`; report schema versioned; critical không thể trả `done`. |
+| GUI/CLI | Contract test cho flags/states; copy privacy/quality được review; không lộ secret. |
+| Visual QA | Snapshot có manifest, engine/version/threshold ghi nhận, injected corruption bị fail. |
+| Documentation/release | Không còn placeholder public, links kiểm tra được, changelog và migration notes cập nhật. |
+
+Mọi task chỉ PASS khi evidence trên đã được chạy, commit vào `main`, push upstream và tag checkpoint đã được push.
+
+## Hàng đợi thực thi chính xác
+
+| Thứ tự | Task | Dependency | Deliverable có thể review |
+|---:|---|---|---|
+| 0 | T-000 System spec + plan | — | SPEC/PLAN, roadmap state, traceability |
+| 1 | T-001 Fixture licensing | T-000 | manifest + redacted/original fixture hợp lệ |
+| 2 | T-002 Expected baseline | T-001 | glossary seed + expected/banned assertions |
+| 3 | T-003 Delivery ADR | T-000 | policy Handoff/provider/security được duyệt |
+| 4 | T-101 Region inventory | T-001 | model + inventory unit tests |
+| 5 | T-103 Formula fail-closed | T-101 | formula signals + preserve behavior |
+| 6 | T-104 Protection QA | T-101, T-103 | structural/visual regression harness |
+| 7 | T-201 Glossary resolver | T-002, T-003 | terminology module/schema |
+| 8 | T-202 Handoff v2 | T-201 | contextual JSONL round-trip |
+| 9 | T-203 Academic CLI | T-202 | quality flags + safe mode contract |
+| 10 | T-301 Verifier | T-104, T-202 | findings/status engine |
+| 11 | T-302 Quality report | T-301, T-203 | versioned JSON report + partial status |
+| 12 | T-303 Render QA | T-302 | render/diff gate |
+| 13 | T-401 GUI lifecycle | T-203, T-302 | Handoff export/import UX |
+| 14 | T-402 Consent/copy UX | T-401 | draft/academic disclosure |
+| 15 | T-501 CI matrix | T-104, T-303 | Windows Python 3.11/3.12 jobs |
+| 16 | T-502 Performance/fallback | T-303 | benchmark + degradation contract |
+| 17 | T-503 Release hygiene | T-401, T-402, T-501, T-502 | docs/release candidate |
+
+## Rollback và scope control
+
+- Nếu protected-region code làm mất hình hoặc glyph: revert riêng checkpoint task đó; giữ source/output artifacts và regression fixture để tái hiện.
+- Nếu glossary/verifier tạo false positive: hạ finding xuống warning chỉ khi có test chứng minh; không vô hiệu hoá global rule để “qua CI”.
+- Nếu provider chưa được duyệt: delivery dừng ở local Handoff; không merge UI/API credential work.
+- Nếu fixture không được phép phân phối: chỉ commit generator/manifest/public redacted equivalent, còn original dùng local acceptance run.
+
 ## Phân rã đề xuất cho lượt thực thi đầu tiên
 
-Lượt đầu nên chỉ thực hiện **T-001, T-002, T-101 và T-102**. Đây là lát cắt nhỏ nhất để tái hiện và ngăn lỗi chữ vỡ trong hình mà chưa cần chọn provider dịch. Sau khi crop figure pass, tiếp tục **T-103 → T-104 → T-201 → T-202**.
-
+T-000 là baseline bắt buộc trước mọi task mới. Lượt kỹ thuật đầu tiên sau đó là **T-001 → T-002 → T-101 → T-103 → T-104**; T-102 đã hoàn tất như emergency hardening. Sau khi M2 pass, tiếp tục **T-003 → T-201 → T-202 → T-203**.

@@ -1,7 +1,7 @@
-# SPEC — Dịch PDF học thuật có kiểm soát chất lượng
+# SYSTEM SPEC — Dịch PDF học thuật có kiểm soát chất lượng
 
-**Trạng thái:** Proposed  
-**Ngày:** 2026-08-27  
+**Trạng thái:** Baseline for implementation
+**Ngày cập nhật:** 2026-08-28
 **Phạm vi phát hành:** phiên bản kế tiếp của `dh-pdf-trans`
 
 ## 1. Vấn đề và mục tiêu
@@ -184,3 +184,139 @@ Rủi ro lớn nhất là không có hai PDF gốc/đích làm fixture tái hi�
 - [PyMuPDF: Page API](https://pymupdf.readthedocs.io/en/latest/page.html) — `get_drawings`, `cluster_drawings`, image/XObject metadata.
 - [PyMuPDF FAQ](https://pymupdf.readthedocs.io/en/latest/faq/index.html) — thứ tự text có thể không theo thứ tự hiển thị; không thể tin plain extraction cho figure phức tạp.
 
+## 9. Bối cảnh hệ thống và actors
+
+| Actor | Mục tiêu | Quyền / giới hạn |
+|---|---|---|
+| Người dùng desktop | Dịch PDF và lấy output an toàn | Chọn `draft` hoặc export/import academic; không sửa source PDF. |
+| Chuyên gia / agent dịch | Dịch Handoff bundle theo context và glossary | Chỉ điền `dst`; không thay `src`, ID hoặc placeholder. |
+| Core PDF | Phân vùng, dịch/rebuild và bảo toàn layout | Không tự dịch protected/unknown region. |
+| Quality verifier | Quyết định `done`, `partial`, `failed` bằng rule xác định | Không tự “sửa” bản dịch có lỗi nghĩa. |
+| Maintainer | Cập nhật glossary, fixture và release | Chỉ merge khi release gate pass. |
+
+### System boundary
+
+```text
+Local PDF ──► preflight ──► segmenter ──► draft translator OR handoff bundle
+    ▲             │              │                       │
+    │             ▼              ▼                       ▼
+ output + report ◄── rebuilder ◄── verifier ◄──── imported translations
+```
+
+Source PDF, glossary và Handoff JSONL là dữ liệu local. Chỉ `draft` được phép gọi Google Translate. `academic` không gửi nội dung ra mạng trừ khi một provider được duyệt trong ADR T-003.
+
+## 10. Module boundaries và interface
+
+| Module | Trách nhiệm | Input | Output | Invariant |
+|---|---|---|---|---|
+| `scripts/translate_pdf.py` | CLI contract, path safety, orchestration | PDF + options | PDF/result/report | Không overwrite khi chưa có uỷ quyền. |
+| `pdf2zh.high_level` | Render/layout pass và PDF stream patch | PDF bytes + model | translated streams | Giữ page count/canvas. |
+| `pdf2zh.converter` | Segment prose, tái dựng glyph/protected region | layout + LT objects | PDF operators | Không dispatch protected glyph cho translator. |
+| `pdf2zh.rules` / region inventory | Phân loại formula/figure/table/unknown | font, glyph, bbox, model signals | region decision + evidence | Khi conflict, chọn bảo toàn. |
+| `pdf2zh.translator` | Draft/Handoff lookup, placeholder safety | safe segment | translated segment hoặc original | Handoff miss không được cache là bản dịch. |
+| terminology resolver (P2) | Ánh xạ glossary và named-entity rule | source segment + glossary | term constraints/findings | Không match substring sai boundary. |
+| quality verifier (P3) | Validate và tạo quality report | source/output inventory + translations | findings + final status | Critical finding không thể là `done`. |
+| `app.gui` | UX, consent, lifecycle file | user action + result | UI status/log link | Không tuyên bố academic nếu chỉ dùng Google. |
+
+## 11. Lifecycle, state machine và failure handling
+
+### 11.1 Document state
+
+```text
+queued → preflight → translating → verifying → done
+                    │                ├──────→ partial
+                    └────────────────┴──────→ failed
+```
+
+- `done`: mọi hard rule pass; output và report (nếu có) được ghi thành công.
+- `partial`: output an toàn tồn tại nhưng có region giữ nguyên, segment miss, hoặc quality warning/error cần review.
+- `failed`: không thể đọc/dựng/xác minh output; không được đưa path output như một kết quả thành công.
+
+### 11.2 Error taxonomy
+
+| Code family | Ví dụ | Final state | Hành động người dùng |
+|---|---|---|---|
+| `INPUT_*` | PDF hỏng, password, path không hợp lệ | failed | Chọn PDF hợp lệ hoặc mở khoá trước. |
+| `LAYOUT_*` | model unavailable, coordinate conflict | partial/failed | Giữ vùng nghi ngờ; gửi diagnostic. |
+| `PROTECTED_*` | figure/formula bị thay đổi | partial | Review report/page/bbox; không tự export published copy. |
+| `TERM_*` | glossary required term missing | partial | Sửa JSONL hoặc glossary rồi rebuild. |
+| `TRANSLATION_*` | network/provider/Handoff miss | partial | Retry hoặc hoàn thiện bundle. |
+| `OUTPUT_*` | write/render/subset font error | failed | Giữ source, kiểm tra quyền ghi/font/log. |
+
+Mọi finding phải có `rule_id`, `severity`, `page` (nếu biết), `bbox` (nếu biết), `evidence`, `suggested_action` và `source_version`.
+
+## 12. Data contracts và compatibility
+
+### 12.1 Region inventory (P1)
+
+```json
+{
+  "schema_version": 1,
+  "page": 3,
+  "regions": [
+    {
+      "kind": "FIGURE",
+      "bbox": [72.0, 96.0, 522.0, 406.0],
+      "confidence": "high",
+      "evidence": ["ltfigure", "vector-drawing"],
+      "dispatch": "preserve"
+    }
+  ]
+}
+```
+
+`kind ∈ {PROSE_SAFE, FORMULA, FIGURE, TABLE, SCAN, UNKNOWN}`. `dispatch` chỉ có `translate` với `PROSE_SAFE`; tất cả kind còn lại mặc định `preserve`.
+
+### 12.2 Quality report (P3)
+
+```json
+{
+  "schema_version": 1,
+  "status": "partial",
+  "source": "paper.pdf",
+  "output": "paper-vi.pdf",
+  "summary": {"critical": 0, "error": 1, "warning": 3},
+  "findings": []
+}
+```
+
+- JSONL v1 `{"src", "dst"}` phải tiếp tục rebuild được.
+- Schema v2 chỉ thêm field; parser phải bỏ qua field chưa biết để tương thích forward.
+- Không log API key, nội dung PDF, hoặc full `dst` trong diagnostic mặc định.
+
+## 13. Security, privacy và vận hành
+
+- `draft`: trước khi request đầu tiên, UI/CLI phải nói rõ nội dung segment được gửi tới Google.
+- `academic` Handoff: không network, không persistent cache cho miss/unknown; bundle nằm trong output directory do người dùng chọn.
+- Provider tương lai: token chỉ đọc từ OS secret store hoặc biến môi trường ở runtime; cấm ghi vào config, JSONL, report hay `pdf-translate.log`.
+- Diagnostic mặc định chỉ chứa fingerprint/source basename/page/bbox/rule. Full segment chỉ bật bằng explicit debug option.
+- Dữ liệu temporary phải bị xoá khi success/fail, trừ artifacts Handoff/report mà người dùng yêu cầu giữ.
+
+## 14. Observability và quality gates
+
+Mỗi run cần log có cấu trúc tối thiểu: `run_id`, engine/quality mode, source hash, page count, protected-region counts, safe-segment count, misses, final status và elapsed time.
+
+| Gate | Khi chạy | Pass condition |
+|---|---|---|
+| G1 input/preflight | trước translator | source hợp lệ, model/config sẵn sàng, region inventory hoàn chỉnh hoặc degraded có report. |
+| G2 translation contract | import Handoff | placeholder/JSON schema hợp lệ, glossary mandatory terms pass. |
+| G3 rebuild integrity | sau rebuild | source/output page count bằng nhau, output mở/render được. |
+| G4 protected integrity | sau rebuild | protected finding không có critical; fixture visual/structural checks pass. |
+| G5 release | CI/release candidate | AC-01…AC-06 pass trên matrix đã định nghĩa. |
+
+## 15. Requirement traceability và quyết định mở
+
+| Requirement | Delivery task | Verification |
+|---|---|---|
+| FR-01 protected region | T-101…T-104 | region + visual regression tests |
+| FR-02 terminology | T-201…T-203 | glossary resolver/Handoff e2e |
+| FR-03 verifier/report | T-301…T-302 | unit schema/rule tests |
+| FR-04 render check | T-303 | injected-corruption visual test |
+| FR-05 UX/CLI | T-203, T-401, T-402 | CLI/GUI contract tests |
+| NFR privacy/performance | T-003, T-502 | security checklist + benchmark |
+
+Open decisions are explicit blockers, not implementation assumptions:
+
+1. **ADR-001 / T-003:** provider policy for a future direct academic mode.
+2. **ADR-002 / T-001:** permitted source of regression fixture and redistribution rights.
+3. **ADR-003 / T-303:** rendering engine, visual threshold and CI artifact retention.
