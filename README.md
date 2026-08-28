@@ -1,0 +1,193 @@
+<p align="center">
+  <img src=".github/assets/logo.png" alt="dh-pdf-trans logo" width="160">
+</p>
+
+<h1 align="center">dh-pdf-trans</h1>
+
+<p align="center">
+  <strong>Dịch tài liệu PDF sang tiếng Việt và 35 ngôn ngữ khác<br>mà vẫn giữ nguyên bố cục, công thức, bảng và hình ảnh.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/your-username/dh-pdf-trans/releases/latest/download/dh-pdf-trans-windows.zip">
+    <img src="https://img.shields.io/badge/TẢI_XUỐNG-Windows_x64-1f6feb?style=for-the-badge&logo=windows11&logoColor=white" alt="Tải dh-pdf-trans cho Windows">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/your-username/dh-pdf-trans/releases/latest"><img src="https://img.shields.io/github/v/release/your-username/dh-pdf-trans?style=flat-square&label=release" alt="Bản phát hành mới nhất"></a>
+  <a href="https://github.com/your-username/dh-pdf-trans/releases"><img src="https://img.shields.io/github/downloads/your-username/dh-pdf-trans/total?style=flat-square&label=downloads" alt="Tổng lượt tải"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/your-username/dh-pdf-trans?style=flat-square" alt="Giấy phép AGPL-3.0"></a>
+  <img src="https://img.shields.io/badge/Python-không_cần_cài-2ea44f?style=flat-square" alt="Không cần cài Python">
+</p>
+
+<p align="center">
+  <a href="#điểm-nổi-bật">Điểm nổi bật</a> ·
+  <a href="#bắt-đầu-trong-1-phút">Cài đặt</a> ·
+  <a href="#cách-sử-dụng">Cách dùng</a> ·
+  <a href="#dùng-như-agent-skill">Agent Skill</a> ·
+  <a href="#giới-hạn-hiện-tại">Giới hạn</a>
+</p>
+
+---
+ 
+dh-pdf-trans là ứng dụng desktop mã nguồn mở dành cho Windows. Công cụ phân tích bố cục từng trang, bảo vệ công thức và code, dịch phần văn xuôi rồi đặt nội dung trở lại đúng vị trí trong tài liệu gốc — không biến PDF của bạn thành một trang chữ trắng đơn giản.
+
+## Điểm nổi bật
+
+- **Giữ nguyên bố cục:** bảo toàn vị trí của đoạn văn, công thức, bảng, hình, mục lục và tài liệu tham khảo.
+- **Sẵn sàng để dùng:** tải về, giải nén và chạy; không cần cài Python hay model riêng.
+- **Xử lý hàng loạt:** kéo thả nhiều file PDF hoặc cả thư mục vào ứng dụng.
+- **36 ngôn ngữ đích:** mặc định là tiếng Việt, cùng nhiều ngôn ngữ sử dụng chữ Latin.
+- **Không dừng cả hàng đợi:** một file lỗi không làm gián đoạn các file còn lại.
+- **Tự báo bản mới:** khi mở ứng dụng, nếu có phiên bản mới trên GitHub thì góc trên bên phải hiện một dòng bấm được để mở trang tải.
+- **Có chế độ dành cho AI agent:** dùng model trong Codex, Claude Code hoặc Copilot để dịch tài liệu chuyên ngành tốt hơn.
+
+## Bắt đầu trong 1 phút
+ 
+1. **[Tải dh-pdf-trans cho Windows](https://github.com/your-username/dh-pdf-trans/releases/latest/download/dh-pdf-trans-windows.zip)** (`.zip`, khoảng 199 MB).
+2. Giải nén toàn bộ file vừa tải.
+3. Mở `dh-pdf-trans.exe`.
+ 
+> [!NOTE]
+> Ứng dụng hiện chỉ hỗ trợ **Windows 64-bit**. Bản desktop không cần cài Python và không phải tải thêm model ở lần chạy đầu. Quá trình dịch bằng Google vẫn cần kết nối Internet.
+ 
+> [!WARNING]
+> Windows SmartScreen có thể cảnh báo vì ứng dụng chưa được ký số. Chọn **More info** → **Run anyway** nếu bạn tải file từ trang Releases chính thức của repo này.
+ 
+Bạn cũng có thể mở [trang Releases](https://github.com/your-username/dh-pdf-trans/releases/latest) để xem ghi chú thay đổi và các tệp của phiên bản mới nhất.
+ 
+Ứng dụng cũng tự kiểm tra phiên bản mới mỗi lần mở. Có bản mới thì góc trên bên phải hiện dòng **● Có bản mới vX.Y.Z**, bấm vào là mở trang tải. Ứng dụng không tự tải và không tự cài đè — bạn vẫn tự giải nén như lần đầu. Máy không có mạng thì bỏ qua, không báo lỗi.
+
+## Cách sử dụng
+
+### 1. Thêm tài liệu
+ 
+Chọn một trong ba cách:
+ 
+- Kéo thả file PDF hoặc cả thư mục vào cửa sổ ứng dụng.
+- Bấm **Chọn file** hoặc **Chọn thư mục**.
+- Thả file trực tiếp lên `dh-pdf-trans.exe`.
+
+### 2. Chọn ngôn ngữ
+
+Chọn ngôn ngữ đích trong mục **Dịch sang**. Ứng dụng mặc định dịch sang **Tiếng Việt**.
+
+### 3. Bắt đầu dịch
+
+Bấm **Dịch**. Các file được xử lý lần lượt và hiển thị trạng thái ngay trong hàng đợi.
+
+Kết quả được lưu tự động vào thư mục `translated` nằm cạnh file nguồn:
+
+```text
+TaiLieu/
+├── document.pdf
+└── translated/
+    └── document-vi.pdf
+```
+
+Mặc định, ứng dụng không ghi đè kết quả đã có. Bật **Ghi đè file đã dịch trước đó** khi bạn muốn dịch lại.
+
+## Ngôn ngữ hỗ trợ
+
+Ứng dụng hỗ trợ 36 ngôn ngữ sử dụng chữ Latin, gồm tiếng Việt, Anh, Pháp, Đức, Tây Ban Nha, Bồ Đào Nha, Ý, Indonesia, Hà Lan, Ba Lan, Thổ Nhĩ Kỳ và nhiều ngôn ngữ châu Âu khác.
+
+Các hệ chữ sau chưa được hỗ trợ: Trung, Nhật, Hàn, Ả Rập, Do Thái, Thái và các chữ Ấn Độ. Ứng dụng sẽ báo lỗi thay vì tạo PDF chứa ký tự ô vuông do thiếu glyph.
+
+## Dùng như Agent Skill
+
+Repo đồng thời tuân theo chuẩn [Agent Skills](https://agentskills.io/) và có thể dùng với Codex, Claude Code, GitHub Copilot cùng các coding agent hỗ trợ `SKILL.md`.
+
+Cài skill cho tất cả agent có trên máy:
+ 
+```powershell
+npx skills add your-username/dh-pdf-trans -g --all
+```
+
+Sau đó gọi skill bằng yêu cầu tự nhiên:
+
+```text
+Use $pdf-translate to translate this PDF into Vietnamese.
+```
+
+Trong Claude Code hoặc Copilot CLI:
+
+```text
+/pdf-translate translate this PDF into Vietnamese.
+```
+
+Skill cung cấp hai chế độ dịch:
+
+| Chế độ | Bộ máy dịch | Phù hợp khi |
+| --- | --- | --- |
+| **Google** | `translate.google.com` | Cần nhanh, miễn phí và không có API key |
+| **Handoff** | AI agent trong phiên làm việc | Tài liệu chuyên ngành cần bản dịch theo ngữ cảnh |
+
+Google là chế độ mặc định và là chế độ được dùng trong app desktop. Handoff trích các đoạn văn sang JSONL để agent dịch, sau đó dựng lại PDF; dữ liệu không được gửi tới Google nhưng sẽ tốn token và mất nhiều thời gian hơn.
+
+Ví dụ với từ *conduction* trong tài liệu truyền nhiệt:
+
+| Google | Handoff |
+| --- | --- |
+| “Sự **dẫn điện** xảy ra khi hai vật tiếp xúc trực tiếp” | “**Dẫn nhiệt** xảy ra khi hai vật thể tiếp xúc trực tiếp với nhau” |
+
+Xem quy trình đầy đủ tại [SKILL.md](SKILL.md).
+
+## Chạy từ mã nguồn
+
+### Chuẩn bị môi trường
+ 
+```powershell
+git clone https://github.com/your-username/dh-pdf-trans.git
+cd dh-pdf-trans
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### Dịch bằng Google
+
+```powershell
+.venv\Scripts\python.exe scripts\translate_pdf.py INPUT.pdf --output-dir OUT
+```
+
+### Dịch bằng Handoff
+
+```powershell
+# 1. Trích các đoạn cần dịch
+.venv\Scripts\python.exe scripts\translate_pdf.py INPUT.pdf --engine handoff --emit-segments segments.jsonl
+
+# 2. Dùng agent dịch segments.jsonl thành translations.jsonl
+
+# 3. Dựng lại PDF
+.venv\Scripts\python.exe scripts\translate_pdf.py INPUT.pdf --engine handoff --segments translations.jsonl --output-dir OUT
+```
+
+### Build ứng dụng Windows
+ 
+```powershell
+.\build.ps1
+```
+ 
+Gói phát hành được tạo tại `dist\dh-pdf-trans-windows.zip`.
+
+## Giới hạn hiện tại
+
+- **Chưa có OCR:** PDF scan chỉ chứa hình ảnh cần được OCR trước khi dịch.
+- Chữ nằm trong vùng được nhận diện là bảng hoặc hình đôi khi được giữ nguyên theo bản gốc.
+- Mục lục, index, danh mục ký hiệu và tài liệu tham khảo được ưu tiên giữ bố cục nên không được dàn lại dòng. Xem [quy tắc bảo toàn](references/preservation-rules.md).
+- Mỗi đoạn gửi tới Google được giới hạn ở 5.000 ký tự; phần vượt quá giới hạn không được dịch.
+- Với đoạn vốn quá chật, mẫu số của phân số nội dòng có thể vẫn nằm sát dòng bên dưới.
+
+Nên kiểm tra lại tài liệu đầu ra trước khi dùng cho xuất bản hoặc các mục đích yêu cầu độ chính xác cao.
+
+## Giấy phép và ghi công
+ 
+dh-pdf-trans được phát hành theo giấy phép [AGPL-3.0](LICENSE). Nếu phát hành lại ứng dụng hoặc cung cấp nó như một dịch vụ qua mạng, bạn phải kèm theo mã nguồn tương ứng theo điều khoản của giấy phép.
+ 
+Dự án được phát triển từ [PDFMathTranslate](https://github.com/Byaidu/PDFMathTranslate) 1.9.11 và [BabelDOC](https://github.com/funstory-ai/BabelDOC). Xem [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) để biết đầy đủ thông tin ghi công.
+ 
+---
+ 
+<p align="center">
+  Nếu dh-pdf-trans hữu ích với bạn, hãy tặng repo một ⭐ để nhiều người biết đến dự án hơn.
+</p>
