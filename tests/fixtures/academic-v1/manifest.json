@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "fixture_id": "academic-v1",
+  "file": "academic-ml-source.pdf",
+  "sha256": "d638e6ab0684ed773abfeb00b98e5687686b76e7a36e10ecff6f146d96031c6f",
+  "license": "CC0-1.0",
+  "creator": "dh-pdf-trans maintainers",
+  "pages": 2,
+  "terms": [
+    "Attention Is All You Need",
+    "Google Research",
+    "ensemble models",
+    "Scaled Dot-Product Attention",
+    "English constituency parsing",
+    "sequence transduction",
+    "Label Smoothing"
+  ],
+  "expected_regions": [
+    {
+      "page": 1,
+      "kind": "FORMULA",
+      "description": "Two monospace formula lines"
+    },
+    {
+      "page": 2,
+      "kind": "FIGURE",
+      "description": "Boxed vector attention visualisation with labels"
+    }
+  ]
+}
