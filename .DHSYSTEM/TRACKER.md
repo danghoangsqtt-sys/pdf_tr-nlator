@@ -13,4 +13,4 @@
 - T-102 passed after GitHub remote was configured and its commits pushed.
 - T-102 là emergency hardening độc lập. Các task P1 tiếp theo chỉ bắt đầu sau P0.
 - T-000: SPEC/PLAN baseline complete; task checkpoint pushed to `origin/main`.
-- T-001: CC0 academic-v1 fixture, manifest and integrity tests complete; task checkpoint pending commit/push.
+- T-001: CC0 academic-v1 fixture, manifest and integrity tests complete; task checkpoint pushed to `origin/main`.

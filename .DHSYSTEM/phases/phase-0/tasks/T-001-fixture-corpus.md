@@ -47,4 +47,4 @@ Kỳ vọng: PDF 2 trang, SHA-256 khớp manifest và hai PNG dễ đọc, khôn
 
 - 2026-08-28: task contract tạo trước artifact authoring.
 - 2026-08-28: tạo fixture CC0 hai trang bằng PyMuPDF, manifest SHA-256 `d638e6ab0684ed773abfeb00b98e5687686b76e7a36e10ecff6f146d96031c6f`, và 4 integrity tests. Render PyMuPDF đã được kiểm tra trực quan; Poppler không có trong environment.
-- 2026-08-28: `unittest discover -s tests -q` pass 72 tests; task đang chờ checkpoint Git trước khi được đánh dấu PASS.
+- 2026-08-28: `unittest discover -s tests -q` pass 72 tests; Git persistence hoàn tất trên `origin/main`; task PASS.
