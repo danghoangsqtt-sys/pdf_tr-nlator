@@ -8,4 +8,4 @@ in_progress
 
 | Task | Status |
 |---|---|
-| T-102 — Bảo toàn text trong `LTFigure` và vùng figure | in_progress |
+| T-102 — Bảo toàn text trong `LTFigure` và vùng figure | completed |

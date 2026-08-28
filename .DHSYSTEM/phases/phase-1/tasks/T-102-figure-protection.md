@@ -38,5 +38,6 @@ Kỳ vọng: tất cả test, gồm regression figure mới, pass.
 
 ## Implementation Notes
 
-- 2026-08-28: task contract được tạo trước khi sửa mã. Workspace không có Git repository/upstream nên không thể tạo durable checkpoint hoặc đánh dấu PASS theo DH-AUTO.
+- 2026-08-28: task contract được tạo trước khi sửa mã. Workspace ban đầu không có Git repository/upstream; checkpoint được hoàn tất sau khi remote GitHub được cung cấp.
 - 2026-08-28: đã thêm `force_protected` keyword-only flag và regression test. `unittest discover -s tests -v` pass 68 tests.
+- 2026-08-28: Git persistence hoàn tất trên `origin/main`; task PASS.
