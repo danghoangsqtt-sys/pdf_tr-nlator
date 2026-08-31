@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "source_language": "en",
+  "target_language": "vi",
+  "domain": "computer-science-ai-ml",
+  "entries": [
+    {"id": "title.attention_is_all_you_need", "source": "Attention Is All You Need", "target": "Attention Is All You Need", "policy": "preserve", "case_sensitive": true, "category": "paper-title"},
+    {"id": "org.google_research", "source": "Google Research", "target": "Google Research", "policy": "preserve", "case_sensitive": true, "category": "organisation"},
+    {"id": "ml.ensemble_models", "source": "ensemble models", "target": "mô hình tổ hợp", "policy": "translate", "case_sensitive": false, "category": "machine-learning"},
+    {"id": "ml.ensemble_learning", "source": "ensemble learning", "target": "học tổ hợp", "policy": "translate", "case_sensitive": false, "category": "machine-learning"},
+    {"id": "ml.ensemble", "source": "ensemble", "target": "tổ hợp", "policy": "translate", "case_sensitive": false, "category": "machine-learning"},
+    {"id": "seq.sequence_transduction", "source": "sequence transduction", "target": "chuyển đổi chuỗi", "policy": "translate", "case_sensitive": false, "category": "sequence-modeling"},
+    {"id": "seq.sequence_to_sequence", "source": "sequence-to-sequence model", "target": "mô hình chuỗi sang chuỗi", "policy": "translate", "case_sensitive": false, "category": "sequence-modeling"},
+    {"id": "nlp.english_constituency_parsing", "source": "English constituency parsing", "target": "phân tích cú pháp thành phần tiếng Anh", "policy": "translate", "case_sensitive": false, "category": "natural-language-processing"},
+    {"id": "nlp.constituency_parsing", "source": "constituency parsing", "target": "phân tích cú pháp thành phần", "policy": "translate", "case_sensitive": false, "category": "natural-language-processing"},
+    {"id": "nlp.parse_tree", "source": "parse tree", "target": "cây cú pháp", "policy": "translate", "case_sensitive": false, "category": "natural-language-processing"},
+    {"id": "attn.scaled_dot_product_attention", "source": "Scaled Dot-Product Attention", "target": "Cơ chế Attention tích vô hướng có tỷ lệ", "policy": "translate", "case_sensitive": false, "category": "attention"},
+    {"id": "math.dot_product", "source": "dot product", "target": "tích vô hướng", "policy": "translate", "case_sensitive": false, "category": "linear-algebra"},
+    {"id": "attn.attention_mechanism", "source": "attention mechanism", "target": "cơ chế Attention", "policy": "translate", "case_sensitive": false, "category": "attention"},
+    {"id": "attn.attention_weights", "source": "Attention weights", "target": "trọng số Attention", "policy": "translate", "case_sensitive": false, "category": "attention"},
+    {"id": "train.label_smoothing", "source": "Label Smoothing", "target": "Làm mịn nhãn", "policy": "translate", "case_sensitive": false, "category": "training"},
+    {"id": "train.cross_entropy", "source": "cross entropy", "target": "entropy chéo", "policy": "translate", "case_sensitive": false, "category": "training"},
+    {"id": "ml.model_parameters", "source": "model parameters", "target": "tham số mô hình", "policy": "translate", "case_sensitive": false, "category": "machine-learning"},
+    {"id": "seq.source_tokens", "source": "source tokens", "target": "token nguồn", "policy": "translate", "case_sensitive": false, "category": "sequence-modeling"},
+    {"id": "attn.query", "source": "Query", "target": "Query", "policy": "preserve", "case_sensitive": true, "category": "attention-label"},
+    {"id": "attn.key", "source": "Key", "target": "Key", "policy": "preserve", "case_sensitive": true, "category": "attention-label"},
+    {"id": "attn.value", "source": "Value", "target": "Value", "policy": "preserve", "case_sensitive": true, "category": "attention-label"},
+    {"id": "pdf.vector_graphic", "source": "vector graphic", "target": "đồ họa vector", "policy": "translate", "case_sensitive": false, "category": "pdf-layout"},
+    {"id": "pdf.formula", "source": "formula", "target": "công thức", "policy": "translate", "case_sensitive": false, "category": "pdf-layout"}
+  ]
+}

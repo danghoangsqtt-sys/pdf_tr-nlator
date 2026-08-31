@@ -10,5 +10,5 @@ in_progress
 |---|---|
 | T-000 — Hoàn thiện system specification và development plan | completed |
 | T-001 — Thu thập fixture có quyền sử dụng | completed |
-| T-002 — Định nghĩa baseline thuật ngữ và expected results | pending |
+| T-002 — Định nghĩa baseline thuật ngữ và expected results | completed |
 | T-003 — Chốt mô hình delivery academic mode | pending |

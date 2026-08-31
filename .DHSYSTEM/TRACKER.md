@@ -3,8 +3,8 @@
 ## Current state
 
 - Current phase: P0 — Nền tảng đặc tả, corpus và baseline
-- Current task: T-002 — Định nghĩa baseline thuật ngữ và expected results
-- Status: T-001 completed; P0 remains in progress
+- Current task: T-003 — Chốt mô hình delivery academic mode
+- Status: T-002 completed; P0 remains in progress
 - Git persistence: `origin/main` configured and pushed.
 
 ## Latest verification
@@ -14,3 +14,5 @@
 - T-102 là emergency hardening độc lập. Các task P1 tiếp theo chỉ bắt đầu sau P0.
 - T-000: SPEC/PLAN baseline complete; task checkpoint pushed to `origin/main`.
 - T-001: CC0 academic-v1 fixture, manifest and integrity tests complete; task checkpoint pushed to `origin/main`.
+- T-002: terminology baseline in progress.
+- T-002: glossary, expected targets and prohibited literal translations complete; task checkpoint pending commit/push.

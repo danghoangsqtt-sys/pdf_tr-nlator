@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "fixture_id": "academic-v1",
+  "source_language": "en",
+  "target_language": "vi",
+  "term_expectations": [
+    {"source": "Attention Is All You Need", "glossary_id": "title.attention_is_all_you_need", "target": "Attention Is All You Need"},
+    {"source": "Google Research", "glossary_id": "org.google_research", "target": "Google Research"},
+    {"source": "ensemble models", "glossary_id": "ml.ensemble_models", "target": "mô hình tổ hợp"},
+    {"source": "Scaled Dot-Product Attention", "glossary_id": "attn.scaled_dot_product_attention", "target": "Cơ chế Attention tích vô hướng có tỷ lệ"},
+    {"source": "English constituency parsing", "glossary_id": "nlp.english_constituency_parsing", "target": "phân tích cú pháp thành phần tiếng Anh"},
+    {"source": "sequence transduction", "glossary_id": "seq.sequence_transduction", "target": "chuyển đổi chuỗi"},
+    {"source": "Label Smoothing", "glossary_id": "train.label_smoothing", "target": "Làm mịn nhãn"}
+  ],
+  "sentence_expectations": [
+    {
+      "source_contains": "It uses ensemble models for sequence transduction",
+      "target_must_contain": ["mô hình tổ hợp", "chuyển đổi chuỗi"]
+    },
+    {
+      "source_contains": "Scaled Dot-Product Attention before Label Smoothing",
+      "target_must_contain": ["Cơ chế Attention tích vô hướng có tỷ lệ", "Làm mịn nhãn"]
+    }
+  ]
+}

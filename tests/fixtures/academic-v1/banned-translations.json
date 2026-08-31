@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "fixture_id": "academic-v1",
+  "entries": [
+    {"glossary_id": "title.attention_is_all_you_need", "forbidden_targets": ["Sự chú ý là tất cả những gì bạn cần"]},
+    {"glossary_id": "org.google_research", "forbidden_targets": ["Google Nghiên cứu"]},
+    {"glossary_id": "ml.ensemble_models", "forbidden_targets": ["các bản hòa tấu", "các dàn nhạc"]},
+    {"glossary_id": "seq.sequence_transduction", "forbidden_targets": ["truyền tải trình tự", "truyền tải chuỗi"]},
+    {"glossary_id": "nlp.english_constituency_parsing", "forbidden_targets": ["phân tích cú pháp khu vực bầu cử tiếng Anh"]},
+    {"glossary_id": "attn.scaled_dot_product_attention", "forbidden_targets": ["Sự chú ý đến sản phẩm chấm theo tỷ lệ", "Chú ý sản phẩm chấm có tỷ lệ"]},
+    {"glossary_id": "math.dot_product", "forbidden_targets": ["sản phẩm chấm"]},
+    {"glossary_id": "train.label_smoothing", "forbidden_targets": ["Làm mịn nhân"]}
+  ]
+}
