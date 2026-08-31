@@ -26,6 +26,7 @@ from pymupdf import Document, Font
 from pdf2zh.converter import TranslateConverter
 from pdf2zh.doclayout import OnnxModel
 from pdf2zh.pdfinterp import PDFPageInterpreterEx
+from pdf2zh.regions import discover_regions, protect_mask
 from pdf2zh.rules import classify_preserved_page, is_scanned_page
 
 NOTO_NAME = "noto"
@@ -163,6 +164,19 @@ def translate_patch(
                         np.clip(int(h - y0 + 1), 0, h - 1),
                     )
                     box[y0:y1, x0:x1] = 0
+
+            # The layout model can miss text-bearing vector graphics. PyMuPDF
+            # exposes large drawing clusters directly, so lock them before the
+            # converter sees their glyphs as ordinary prose.
+            protected_regions = discover_regions(doc_zh[page.pageno])
+            locked = protect_mask(box, protected_regions, page_rect)
+            if locked:
+                logger.debug(
+                    "Page %s: protected %s image/vector region(s): %s",
+                    pageno + 1,
+                    locked,
+                    protected_regions,
+                )
 
             # Detect TOC pages by analyzing extracted text patterns
             page_text = doc_zh[page.pageno].get_text("text")

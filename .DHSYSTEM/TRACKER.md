@@ -2,9 +2,9 @@
 
 ## Current state
 
-- Current phase: P0 — Nền tảng đặc tả, corpus và baseline
-- Current task: T-101 — Tạo region inventory
-- Status: T-003 completed; P0 remains in progress
+- Current phase: P1 — Bảo vệ figure, scan và formula
+- Current task: T-103 — Formula/scan classifier fail-closed
+- Status: T-101 implemented and verified; Git persistence pending
 - Git persistence: `origin/main` configured and pushed.
 
 ## Latest verification
@@ -18,3 +18,5 @@
 - T-002: glossary, expected targets and prohibited literal translations complete; task checkpoint pushed to `origin/main`.
 - T-003: local academic Handoff ADR in progress.
 - T-003: ADR-001 accepted; task checkpoint pushed to `origin/main`.
+- P0 completed on 2026-08-31; T-101 region inventory in progress.
+- T-101: direct image/vector region inventory and mask protection verified locally (80 tests); persistence pending.
