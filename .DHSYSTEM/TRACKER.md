@@ -17,4 +17,4 @@
 - T-002: terminology baseline in progress.
 - T-002: glossary, expected targets and prohibited literal translations complete; task checkpoint pushed to `origin/main`.
 - T-003: local academic Handoff ADR in progress.
-- T-003: ADR-001 accepted; task checkpoint pending commit/push.
+- T-003: ADR-001 accepted; task checkpoint pushed to `origin/main`.

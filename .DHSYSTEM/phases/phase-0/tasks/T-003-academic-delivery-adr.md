@@ -44,4 +44,4 @@ Kỳ vọng: một quyết định Accepted có scope, consequences và trigger 
 ## Implementation Notes
 
 - 2026-08-31: task contract tạo trước khi viết ADR.
-- 2026-08-31: ADR-001 accepted local Handoff; SPEC/PLAN liên kết quyết định và `git diff --check` pass. Task chờ checkpoint Git trước khi PASS.
+- 2026-08-31: ADR-001 accepted local Handoff; SPEC/PLAN liên kết quyết định và `git diff --check` pass. Git persistence hoàn tất trên `origin/main`; task PASS.
