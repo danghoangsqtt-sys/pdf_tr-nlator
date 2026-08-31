@@ -2,7 +2,7 @@
 
 ## Status
 
-in_progress
+completed
 
 ## Tasks
 
@@ -10,5 +10,5 @@ in_progress
 |---|---|
 | T-101 — Tạo region inventory | completed |
 | T-103 — Formula/scan classifier fail-closed | completed |
-| T-104 — Kiểm định structural preservation | pending |
+| T-104 — Kiểm định structural preservation | completed |
 | T-102 — Bảo toàn text trong `LTFigure` và vùng figure | completed |

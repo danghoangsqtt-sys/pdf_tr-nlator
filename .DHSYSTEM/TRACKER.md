@@ -2,9 +2,9 @@
 
 ## Current state
 
-- Current phase: P1 — Bảo vệ figure, scan và formula
-- Current task: T-103 — Formula/scan classifier fail-closed
-- Status: T-103 completed and pushed; next T-104
+- Current phase: P2 — Academic translation và terminology
+- Current task: T-201 — Glossary schema và resolver
+- Status: P1/M2 completed locally; T-104 Git persistence pending
 - Git persistence: `origin/main` configured and pushed.
 
 ## Latest verification
@@ -21,3 +21,4 @@
 - P0 completed on 2026-08-31; T-101 region inventory in progress.
 - T-101: direct image/vector region inventory and mask protection verified locally (80 tests); implementation pushed to `origin/main` at `2f07dc1`.
 - T-103: formula/scan/unknown fail-closed protection verified locally (83 tests); implementation pushed to `origin/main` at `0d7e1b7`.
+- T-104: protected-region snapshot, glyph-to-mask proof and formula/figure render checks verified locally (86 tests); persistence pending.

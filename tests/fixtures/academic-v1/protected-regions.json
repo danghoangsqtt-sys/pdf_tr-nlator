@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "coordinate_space": "PyMuPDF page points, rounded to 0.1",
+  "pages": [
+    {
+      "page": 1,
+      "regions": [
+        {"kind": "FIGURE", "bbox": [64.0, 302.0, 531.0, 404.0], "confidence": "high", "evidence": ["vector-drawing"]},
+        {"kind": "FORMULA", "bbox": [88.0, 345.1, 289.6, 365.1], "confidence": "high", "evidence": ["formula-font:Courier", "formula-syntax:operators=3", "single-line-geometry"]},
+        {"kind": "FORMULA", "bbox": [88.0, 374.8, 361.6, 389.8], "confidence": "high", "evidence": ["formula-font:Courier", "formula-syntax:operators=4", "single-line-geometry"]}
+      ]
+    },
+    {
+      "page": 2,
+      "regions": [
+        {"kind": "FIGURE", "bbox": [72.0, 160.0, 523.0, 540.0], "confidence": "high", "evidence": ["vector-drawing"]},
+        {"kind": "FORMULA", "bbox": [118.0, 506.1, 391.6, 518.0], "confidence": "high", "evidence": ["formula-font:Courier", "formula-syntax:operators=4", "single-line-geometry"]}
+      ]
+    }
+  ]
+}
