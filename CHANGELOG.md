@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Add a reviewed protected-region snapshot plus structural glyph-to-mask and rendered-crop regressions for the academic fixture.
+- Add a local academic glossary resolver with schema validation, longest phrase matching, word boundaries, and conflict detection.
 
 ### Fixed
 
