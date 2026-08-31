@@ -4,7 +4,7 @@
 
 - Current phase: P1 — Bảo vệ figure, scan và formula
 - Current task: T-103 — Formula/scan classifier fail-closed
-- Status: T-103 implemented and verified; Git persistence pending
+- Status: T-103 completed and pushed; next T-104
 - Git persistence: `origin/main` configured and pushed.
 
 ## Latest verification
@@ -20,4 +20,4 @@
 - T-003: ADR-001 accepted; task checkpoint pushed to `origin/main`.
 - P0 completed on 2026-08-31; T-101 region inventory in progress.
 - T-101: direct image/vector region inventory and mask protection verified locally (80 tests); implementation pushed to `origin/main` at `2f07dc1`.
-- T-103: formula/scan/unknown fail-closed protection verified locally (83 tests); persistence pending.
+- T-103: formula/scan/unknown fail-closed protection verified locally (83 tests); implementation pushed to `origin/main` at `0d7e1b7`.

@@ -57,4 +57,4 @@ Kỳ vọng: formula fixture nhận `FORMULA`; formula không đủ bằng chứ
 
 - 2026-08-31: `discover_regions()` bổ sung `FORMULA` từ formula font/Unicode math, `UNKNOWN` cho syntax+geometry mơ hồ, và `SCAN` cho image coverage lớn hơn 50% page.
 - 2026-08-31: `protect_mask()` mặc định khóa `FIGURE`, `FORMULA`, `SCAN` và `UNKNOWN`; không có OCR/provider/network mới.
-- 2026-08-31: `tests.test_regions` pass 7/7; full suite pass 83/83; `compileall` và `git diff --check` pass. Git persistence pending.
+- 2026-08-31: `tests.test_regions` pass 7/7; full suite pass 83/83; `compileall` và `git diff --check` pass. Implementation pushed to `origin/main` at `0d7e1b7`.
