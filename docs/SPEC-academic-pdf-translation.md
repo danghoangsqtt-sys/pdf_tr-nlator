@@ -203,7 +203,7 @@ Local PDF ──► preflight ──► segmenter ──► draft translator OR 
  output + report ◄── rebuilder ◄── verifier ◄──── imported translations
 ```
 
-Source PDF, glossary và Handoff JSONL là dữ liệu local. Chỉ `draft` được phép gọi Google Translate. `academic` không gửi nội dung ra mạng trừ khi một provider được duyệt trong ADR T-003.
+Source PDF, glossary và Handoff JSONL là dữ liệu local. Theo [ADR-001](adr/ADR-001-academic-delivery-model.md), `academic` dùng local Handoff export/import và không gửi nội dung ra mạng. Chỉ `draft` được phép gọi Google Translate.
 
 ## 10. Module boundaries và interface
 
@@ -317,6 +317,6 @@ Mỗi run cần log có cấu trúc tối thiểu: `run_id`, engine/quality mode
 
 Open decisions are explicit blockers, not implementation assumptions:
 
-1. **ADR-001 / T-003:** provider policy for a future direct academic mode.
-2. **ADR-002 / T-001:** permitted source of regression fixture and redistribution rights.
+1. **ADR-001 / T-003:** accepted - local Handoff is the current academic delivery model; any provider/OCR proposal needs a successor ADR.
+2. **ADR-002 / T-001:** resolved - `academic-v1` is a self-authored CC0 fixture; future third-party fixtures still need redistribution review.
 3. **ADR-003 / T-303:** rendering engine, visual threshold and CI artifact retention.

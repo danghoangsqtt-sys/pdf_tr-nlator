@@ -3,8 +3,8 @@
 ## Current state
 
 - Current phase: P0 — Nền tảng đặc tả, corpus và baseline
-- Current task: T-003 — Chốt mô hình delivery academic mode
-- Status: T-002 completed; P0 remains in progress
+- Current task: T-101 — Tạo region inventory
+- Status: T-003 completed; P0 remains in progress
 - Git persistence: `origin/main` configured and pushed.
 
 ## Latest verification
@@ -16,3 +16,5 @@
 - T-001: CC0 academic-v1 fixture, manifest and integrity tests complete; task checkpoint pushed to `origin/main`.
 - T-002: terminology baseline in progress.
 - T-002: glossary, expected targets and prohibited literal translations complete; task checkpoint pushed to `origin/main`.
+- T-003: local academic Handoff ADR in progress.
+- T-003: ADR-001 accepted; task checkpoint pending commit/push.

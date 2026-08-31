@@ -61,8 +61,8 @@ M0 T-000 system baseline
 ### T-003 — Quyết định delivery academic mode
 
 - **Owner:** Product + Security
-- **Quyết định cần chốt:** chỉ Handoff local/export-import hay provider có cấu hình; chính sách dữ liệu, API key và chi phí nếu có provider.
-- **Nghiệm thu:** ADR ngắn được duyệt. Nếu chưa chốt, scope P4 giới hạn ở Handoff bundle, không tích hợp key.
+- **Quyết định:** accepted trong [ADR-001](adr/ADR-001-academic-delivery-model.md): local Handoff export/import, không provider, không credential, không OCR cho release này.
+- **Nghiệm thu:** T-201/T-202/T-203 có thể triển khai mà không thêm network transport hoặc key handling.
 
 ## P1 — Bảo vệ figure, scan và formula
 
