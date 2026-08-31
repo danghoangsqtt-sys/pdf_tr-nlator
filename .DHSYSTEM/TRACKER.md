@@ -15,4 +15,4 @@
 - T-000: SPEC/PLAN baseline complete; task checkpoint pushed to `origin/main`.
 - T-001: CC0 academic-v1 fixture, manifest and integrity tests complete; task checkpoint pushed to `origin/main`.
 - T-002: terminology baseline in progress.
-- T-002: glossary, expected targets and prohibited literal translations complete; task checkpoint pending commit/push.
+- T-002: glossary, expected targets and prohibited literal translations complete; task checkpoint pushed to `origin/main`.

@@ -48,4 +48,4 @@ Kỳ vọng: glossary có ít nhất 20 entries, bao phủ toàn bộ 7 fixture 
 ## Implementation Notes
 
 - 2026-08-31: task contract tạo trước khi thêm data baseline.
-- 2026-08-31: thêm glossary 23 entries, 7 fixture expectations và 8 banned-translation groups. `unittest discover -s tests -q` pass 76 tests; task chờ checkpoint Git trước khi PASS.
+- 2026-08-31: thêm glossary 23 entries, 7 fixture expectations và 8 banned-translation groups. `unittest discover -s tests -q` pass 76 tests; Git persistence hoàn tất trên `origin/main`; task PASS.
