@@ -49,4 +49,4 @@ Kỳ vọng: fixture vector bbox được đánh dấu `FIGURE`, image evidence 
 
 - 2026-08-31: PyMuPDF 1.25.2 preflight: `cluster_drawings()` có sẵn; fixture page 2 trả figure rect `(72, 160, 523, 540)`.
 - 2026-08-31: `discover_regions()` nhận diện image và vector-drawing clusters lớn với evidence; `protect_mask()` scale, đảo trục Y và clamp trước khi khóa layout mask.
-- 2026-08-31: `tests.test_regions` pass 4/4; full suite pass 80/80; `compileall` và `git diff --check` pass. Git persistence pending.
+- 2026-08-31: `tests.test_regions` pass 4/4; full suite pass 80/80; `compileall` và `git diff --check` pass. Implementation pushed to `origin/main` at `2f07dc1`.
