@@ -1,7 +1,7 @@
 {
   "current_phase": "P2",
   "current_task": "T-201",
-  "status": "P1_M2_completed_T-104_persistence_pending_next_T-201_glossary_resolver",
+  "status": "P1_M2_completed_T-104_pushed_next_T-201_glossary_resolver",
   "verification": "86 unittest tests plus compileall, git diff --check and visual crop review passed on 2026-08-31",
   "git_persistence": "origin/main configured and pushed"
 }

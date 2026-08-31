@@ -62,4 +62,4 @@ hai crop render có ink và full suite pass.
 
 - 2026-08-31: snapshot v1 ghi 5 regions reviewed: 2 vector `FIGURE` và 3 `FORMULA` từ fixture hai trang.
 - 2026-08-31: structural test chứng minh mọi glyph có tâm nằm trong region bảo vệ map vào layout mask value 0; render crop formula/figure có ink ratio vượt ngưỡng 1%.
-- 2026-08-31: visual review trực tiếp xác nhận formula, labels Query/Key/Value, annotation và trục biểu đồ rõ ràng. Full suite pass 86/86; `compileall` và `git diff --check` pass. Git persistence pending.
+- 2026-08-31: visual review trực tiếp xác nhận formula, labels Query/Key/Value, annotation và trục biểu đồ rõ ràng. Full suite pass 86/86; `compileall` và `git diff --check` pass. Implementation pushed to `origin/main` at `b0dd19d`.
