@@ -32,4 +32,4 @@ git diff --check
 ## Implementation Notes
 
 - 2026-08-31: `GlossaryResolver` validate schema/ids/policy/conflict, match phrase theo word boundary và ưu tiên source dài hơn để không che entry cụ thể.
-- 2026-08-31: regression cover fixture terms, substring boundary, case-sensitive preserve và conflicting entry. Full suite pass 89/89; `compileall` và `git diff --check` pass. Git persistence pending.
+- 2026-08-31: regression cover fixture terms, substring boundary, case-sensitive preserve và conflicting entry. Full suite pass 89/89; `compileall` và `git diff --check` pass. Implementation pushed to `origin/main` at `195b418`.
