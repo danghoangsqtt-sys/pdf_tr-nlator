@@ -7,10 +7,13 @@ converter's layout mask uses PDFMiner's lower-left coordinate space, so only
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from enum import Enum
 from math import ceil, floor
-from typing import Any, Iterable
+from typing import Any, Iterable, Mapping
+
+from pdf2zh.rules import is_formula_font
 
 
 class RegionKind(str, Enum):
@@ -22,6 +25,24 @@ class RegionKind(str, Enum):
     TABLE = "TABLE"
     SCAN = "SCAN"
     UNKNOWN = "UNKNOWN"
+
+
+PROTECTED_REGION_KINDS = frozenset(
+    {
+        RegionKind.FIGURE,
+        RegionKind.FORMULA,
+        RegionKind.SCAN,
+        RegionKind.UNKNOWN,
+    }
+)
+
+MATH_UNICODE_RANGES = (
+    (0x2200, 0x22FF),
+    (0x27C0, 0x27EF),
+    (0x2900, 0x2BFF),
+    (0x1D400, 0x1D7FF),
+)
+FORMULA_OPERATORS = frozenset("=+-*/^_<>|~\\")
 
 
 @dataclass(frozen=True)
@@ -50,12 +71,100 @@ def _bbox(value: Any) -> tuple[float, float, float, float] | None:
     return x0, y0, x1, y1
 
 
-def discover_regions(page: Any, *, min_vector_area_ratio: float = 0.08) -> list[Region]:
-    """Discover high-confidence image and large vector figure regions.
+def _contains_math_unicode(text: str) -> bool:
+    return any(
+        lower <= ord(character) <= upper
+        for character in text
+        for lower, upper in MATH_UNICODE_RANGES
+    )
+
+
+def _formula_regions(page: Any, page_bbox: tuple[float, float, float, float]) -> list[Region]:
+    """Classify formula-looking text lines without relying on one PDF font."""
+    try:
+        text = page.get_text("dict")
+        blocks = text.get("blocks", ()) if isinstance(text, Mapping) else ()
+    except (AttributeError, RuntimeError, ValueError):
+        return []
+
+    page_width = page_bbox[2] - page_bbox[0]
+    page_height = page_bbox[3] - page_bbox[1]
+    regions: list[Region] = []
+    for block in blocks:
+        if not isinstance(block, Mapping) or block.get("type") != 0:
+            continue
+        for line in block.get("lines", ()):
+            if not isinstance(line, Mapping):
+                continue
+            spans = [
+                span
+                for span in line.get("spans", ())
+                if isinstance(span, Mapping) and _bbox(span.get("bbox")) is not None
+            ]
+            if not spans:
+                continue
+            content = "".join(str(span.get("text", "")) for span in spans).strip()
+            if not content:
+                continue
+            span_boxes = [_bbox(span.get("bbox")) for span in spans]
+            boxes = [box for box in span_boxes if box is not None]
+            x0 = min(box[0] for box in boxes)
+            y0 = min(box[1] for box in boxes)
+            x1 = max(box[2] for box in boxes)
+            y1 = max(box[3] for box in boxes)
+            bbox = (x0, y0, x1, y1)
+
+            formula_fonts = sorted(
+                {
+                    str(span.get("font", ""))
+                    for span in spans
+                    if is_formula_font(str(span.get("font", "")))
+                }
+            )
+            has_unicode_math = _contains_math_unicode(content)
+            operator_count = sum(character in FORMULA_OPERATORS for character in content)
+            structural_syntax = any(character in content for character in "_^/()[]{}")
+            has_digit = any(character.isdigit() for character in content)
+            word_count = len(re.findall(r"[A-Za-z]+", content))
+            short_geometry = (
+                x1 - x0 <= page_width * 0.85 and y1 - y0 <= page_height * 0.08
+            )
+            syntax_signal = (
+                operator_count >= 2
+                and (has_digit or structural_syntax or "=" in content)
+                and (word_count <= 3 or structural_syntax)
+            )
+
+            evidence: list[str] = []
+            if formula_fonts:
+                evidence.extend(f"formula-font:{font}" for font in formula_fonts)
+            if has_unicode_math:
+                evidence.append("unicode-math")
+            if syntax_signal:
+                evidence.append(f"formula-syntax:operators={operator_count}")
+            if short_geometry:
+                evidence.append("single-line-geometry")
+
+            if formula_fonts or has_unicode_math:
+                regions.append(Region(RegionKind.FORMULA, bbox, "high", tuple(evidence)))
+            elif syntax_signal and short_geometry:
+                # A plausible equation without reliable font or Unicode metadata
+                # is deliberately kept rather than being sent to translation.
+                regions.append(Region(RegionKind.UNKNOWN, bbox, "low", tuple(evidence)))
+    return regions
+
+
+def discover_regions(
+    page: Any,
+    *,
+    min_vector_area_ratio: float = 0.08,
+    min_scan_area_ratio: float = 0.5,
+) -> list[Region]:
+    """Discover evidence-backed figure, scan, and formula regions.
 
     Small drawing clusters are often rules, underlines, or formula fraction
-    bars. They deliberately stay out of this phase; formula classification is
-    added separately by T-103.
+    bars, so vector discovery only accepts a substantial portion of the page.
+    Formula classification uses text metadata instead of drawing geometry.
     """
     page_bbox = _bbox(getattr(page, "rect", None))
     if page_bbox is None:
@@ -73,6 +182,16 @@ def discover_regions(page: Any, *, min_vector_area_ratio: float = 0.08) -> list[
         bbox = _bbox(image.get("bbox"))
         if bbox is not None:
             regions.append(Region(RegionKind.FIGURE, bbox, "high", ("image",)))
+            image_area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
+            if image_area / page_area > min_scan_area_ratio:
+                regions.append(
+                    Region(
+                        RegionKind.SCAN,
+                        bbox,
+                        "high",
+                        ("image", f"coverage={image_area / page_area:.3f}"),
+                    )
+                )
 
     try:
         clusters: Iterable[Any] = page.cluster_drawings()
@@ -85,6 +204,7 @@ def discover_regions(page: Any, *, min_vector_area_ratio: float = 0.08) -> list[
         area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
         if area / page_area >= min_vector_area_ratio:
             regions.append(Region(RegionKind.FIGURE, bbox, "high", ("vector-drawing",)))
+    regions.extend(_formula_regions(page, page_bbox))
     return regions
 
 
@@ -93,7 +213,7 @@ def protect_mask(
     regions: Iterable[Region],
     page_bbox: Any,
     *,
-    kinds: frozenset[RegionKind] = frozenset({RegionKind.FIGURE}),
+    kinds: frozenset[RegionKind] = PROTECTED_REGION_KINDS,
 ) -> int:
     """Set protected regions to zero in a lower-left-origin layout mask.
 

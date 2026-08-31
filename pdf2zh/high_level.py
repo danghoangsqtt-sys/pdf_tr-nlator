@@ -165,14 +165,14 @@ def translate_patch(
                     )
                     box[y0:y1, x0:x1] = 0
 
-            # The layout model can miss text-bearing vector graphics. PyMuPDF
-            # exposes large drawing clusters directly, so lock them before the
-            # converter sees their glyphs as ordinary prose.
+            # The layout model can miss vector labels, formula text, and hidden
+            # OCR layers. Evidence-backed regions are locked before the converter
+            # can dispatch their glyphs as ordinary prose.
             protected_regions = discover_regions(doc_zh[page.pageno])
             locked = protect_mask(box, protected_regions, page_rect)
             if locked:
                 logger.debug(
-                    "Page %s: protected %s image/vector region(s): %s",
+                    "Page %s: protected %s evidence-backed region(s): %s",
                     pageno + 1,
                     locked,
                     protected_regions,
